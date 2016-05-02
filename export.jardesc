@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<jardesc>
+    <jar path="/home/aleks/Development/Java/Bukkit/FlyAntiAirTurret.jar"/>
+    <options buildIfNeeded="true" compress="true" descriptionLocation="/FlyAntiAirTurret/export.jardesc" exportErrors="false" exportWarnings="true" includeDirectoryEntries="false" overwrite="false" saveDescription="true" storeRefactorings="false" useSourceFolders="false"/>
+    <storedRefactorings deprecationInfo="true" structuralOnly="false"/>
+    <selectedProjects/>
+    <manifest generateManifest="false" manifestLocation="/FlyAntiAirTurret/MANIFEST.MF" manifestVersion="1.0" reuseManifest="true" saveManifest="true" usesManifest="true">
+        <sealing sealJar="false">
+            <packagesToSeal/>
+            <packagesToUnSeal/>
+        </sealing>
+    </manifest>
+    <selectedElements exportClassFiles="true" exportJavaFiles="false" exportOutputFolder="false">
+        <javaElement handleIdentifier="=FlyAntiAirTurret/src"/>
+        <file path="/FlyAntiAirTurret/README.md"/>
+        <file path="/FlyAntiAirTurret/plugin.yml"/>
+    </selectedElements>
+</jardesc>

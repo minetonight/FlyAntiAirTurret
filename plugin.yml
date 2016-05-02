@@ -1,0 +1,13 @@
+name: FlyAntiAirTurret
+main: com.github.minetonight.flyantiairturret.FlyAntiAirTurret
+version: 0.1
+commands:
+  turret:
+    description: Will check flying players and will shoot them down
+    usage: /turret [minHeight]
+    permission: turret.fire
+    permission-message: You don't have permission turret.fire 
+permissions:
+  turret.fire:
+    description: Allows you to check for flying players
+    default: true
