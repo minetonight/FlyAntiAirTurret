@@ -1,7 +1,7 @@
 FlyAntiAirTurret
 =============
 
-Spigot plugin http://dev.bukkit.org/bukkit-plugins/ to shoot down people that fly in the server. NoCheatPlus is performace bugger and I need another approach.  
+Spigot plugin http://dev.bukkit.org/bukkit-plugins/fly-antiair-turret/ to shoot down people that fly in the server. NoCheatPlus is performace bugger and I need another approach.  
 Banning is not an option, so killing might do. 
 
 Commands:
