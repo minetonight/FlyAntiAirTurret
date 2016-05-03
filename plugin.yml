@@ -1,6 +1,6 @@
 name: FlyAntiAirTurret
 main: com.github.minetonight.flyantiairturret.FlyAntiAirTurret
-version: 0.1
+version: 0.2
 commands:
   turret:
     description: Will check flying players and will shoot them down

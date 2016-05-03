@@ -1,11 +1,13 @@
 package com.github.minetonight.flyantiairturret;
 
 import java.util.Collection;
+import java.util.logging.Level;
 
 import org.bukkit.Bukkit;
-import org.bukkit.EntityEffect;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -72,7 +74,8 @@ public class FlyAntiAirTurret extends JavaPlugin implements Listener {
 		Collection<? extends Player> onlinePlayers = Bukkit.getServer().getOnlinePlayers();
 		for(Player target : onlinePlayers) {
 			isFlying = isFlying(target, minHeight);
-			if (isFlying) {
+			if (isFlying && 
+					! isNextToBlock(target)) { // fix for builders of high platforms
 				performFire(plugin, target, sender);
 			}
 			isFlying = false;
@@ -97,6 +100,58 @@ public class FlyAntiAirTurret extends JavaPlugin implements Listener {
 		return playerHeight >= minHeight;
 	}//eof isFlying
 	
+	final int directionsEight[][] = {
+			{ 1, 0,  0}, // 12 o'clock
+			{-1, 0,  0}, // 6
+			{ 1, 0,  1}, // 1
+			{-1, 0,  1}, // 4
+			{ 1, 0, -1}, // 11
+			{-1, 0, -1}, // 7
+			{ 0, 0,  1}, // 3
+			{ 0, 0, -1}, // 9
+	};
+
+	private boolean isNextToBlock(Player player) {
+		
+		Location location = player.getLocation();
+		location.setY(location.getY() - 1);
+		
+		Block block = location.getBlock();
+		Material type;
+
+		boolean flag = false;
+		
+		//check block at location
+		type = block.getType();
+		if(isDebugging){
+			getLogger().info("The location is in "+type.toString());
+		}
+		
+		//check blocks around
+		for (int[] dir : directionsEight) {
+			Block relative = block.getRelative(dir[0], dir[1], dir[2]);
+
+			if(isDebugging){
+				System.out.println("location=" + location);
+				getLogger().info("At " + relative.getLocation() + " there is "+ relative.getType());
+			}
+
+			type = relative.getType();
+			if (type != Material.AIR) {
+				flag = true;
+			}
+		}
+		
+		if(isDebugging){
+			if (flag) {
+				getLogger().info("It looks like you are next to a block.");
+			}
+		}
+		return flag;
+	}//eof isNextToPortal
+	
+	
+	
 	
 	private void performFire(JavaPlugin plugin, final Player player, final CommandSender sender) {
 
@@ -108,7 +163,17 @@ public class FlyAntiAirTurret extends JavaPlugin implements Listener {
 				
 				
 				if (success) {
-					player.playEffect(EntityEffect.FIREWORK_EXPLODE);
+					try {
+						player.playSound(player.getLocation(), org.bukkit.Sound.ENTITY_ENDERDRAGON_FIREBALL_EXPLODE, 1.5f, 1);
+						Thread.sleep(500);
+						player.playSound(player.getLocation(), org.bukkit.Sound.ENTITY_ENDERDRAGON_FIREBALL_EXPLODE, 1.5f, 1);
+						Thread.sleep(500);
+						player.playSound(player.getLocation(), org.bukkit.Sound.ENTITY_ENDERDRAGON_FIREBALL_EXPLODE, 1.5f, 1);
+					} catch (InterruptedException e) {
+						getLogger().log(Level.SEVERE, e.getMessage());
+					}
+					
+					
 					player.sendMessage("§4[FlyAntiAirTurret] has detected you were flying. Flying is *no more* without consequences in this server!");
 					
 					player.setHealth(1);
